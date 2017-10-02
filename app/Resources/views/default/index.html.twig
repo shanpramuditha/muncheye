@@ -101,7 +101,7 @@
                         <td>{{ product.product }}</td>
                         <td>{{ product.launchDate }}</td>
                         <td>{{ product.jvPage }}</td>
-                        <td>{{ product.link }}</td>
+                        <td><a href="{{ product.link }}" target="_blank">{{ product.link }}</a></td>
                         <th><select data-id="{{ product.id }}" class="statusChange">
                                 {% if(product.status == 'good') %}
                                     <option selected value="good">Good</option>
