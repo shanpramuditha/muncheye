@@ -26,7 +26,7 @@ class ProductRepository extends EntityRepository
                 $addedDateFrom = \DateTime::createFromFormat('m/d/Y', $addedDateFrom);
             }
             if($addedDateTo != null){
-                $addedDateTo = \DateTime::createFromFormat('d/m/Y', $addedDateTo);
+                $addedDateTo = \DateTime::createFromFormat('m/d/Y', $addedDateTo);
             }
             $qb->andWhere(
                 $qb->expr()->between(
@@ -44,7 +44,7 @@ class ProductRepository extends EntityRepository
                 $updatedDateFrom = \DateTime::createFromFormat('m/d/Y', $updatedDateFrom);
             }
             if($updatedDateTo != null){
-                $updatedDateTo = \DateTime::createFromFormat('d/m/Y', $updatedDateTo);
+                $updatedDateTo = \DateTime::createFromFormat('m/d/Y', $updatedDateTo);
             }
             $qb->andWhere(
                 $qb->expr()->between(
