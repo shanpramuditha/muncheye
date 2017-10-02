@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="col-md-12">
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">{{ product.product }}</h3>
+            </div>
+            <div class="box-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Value</th>
+                    </tr>
+                        <tr>
+                            <td>Vendor</td>
+                            <td>{{ product.vendor }}</td>
+                        </tr>
+                    <tr>
+                        <td>Link</td>
+                        <td>{{ product.link }}</td>
+                    </tr>
+                    <tr>
+                        <td>Product</td>
+                        <td>{{ product.product }}</td>
+                    </tr>
+                    <tr>
+                        <td>launch Date</td>
+                        <td>{{ product.launchDate }}</td>
+                    </tr>
+                    <tr>
+                        <td>Launch Time</td>
+                        <td>{{ product.launchTime }}</td>
+                    </tr>
+                    <tr>
+                        <td>Front End Price</td>
+                        <td>{{ product.frontEndPrice }}</td>
+                    </tr>
+                    <tr>
+                        <td>Commission</td>
+                        <td>{{ product.commision }}</td>
+                    </tr>
+                    <tr>
+                        <td>JV page</td>
+                        <td>{{ product.jvPage }}</td>
+                    </tr>
+                    <tr>
+                        <td>Affiliate Network</td>
+                        <td>{{ product.affiliateNetwork }}</td>
+                    </tr>
+                    <tr>
+                        <td>Niche</td>
+                        <td>{{ product.niche }}</td>
+                    </tr>
+                    <tr>
+                        <td>Status</td>
+                        <td>{{ product.status }}</td>
+                    </tr>
+                    <tr>
+                        <td>Comment</td>
+                        <td>{{ product.comment }}</td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

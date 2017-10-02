@@ -1,0 +1,164 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <style>
+        td {
+            max-width: 60px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    </style>
+<div class="col-md-12">
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Search Filters</h3>
+        </div>
+
+        <div class="box-body">
+                <form role="form" action="{{ url('products_list') }}">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="exampleInputFile">Product Title</label>
+                            <input type="text" class="form-control" name="title" value="{{ title }}" placeholder="Enter Product Title">
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <label>Added Date : From</label>
+                                <div class="input-group date">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input type="text" class="form-control pull-right" value="{{ addedDateFrom }}" name="addedDateFrom" id="addedDateFrom">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Added Date : To</label>
+                                <div class="input-group date">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input type="text" class="form-control pull-right" value="{{ addedDateTo }}" name="addedDateTo" id="addedDateTo">
+                                </div>
+                            </div>
+
+                            <!-- /.input group -->
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <label>Updated Date : From</label>
+                                <div class="input-group date">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input type="text" class="form-control pull-right" value="{{ updatedDateFrom }}" name="updatedDateFrom" id="updatedDateFrom">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Updated Date : To</label>
+                                <div class="input-group date">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input type="text" class="form-control pull-right" value="{{ updatedDateTo }}" name="updatedDateTo" id="updatedDateTo">
+                                </div>
+                            </div>
+
+                            <!-- /.input group -->
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                </form>
+            </div>
+    </div>
+</div>
+    <div class="col-md-12">
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Product Details</h3>
+            </div>
+        <div class="box-body">
+            <table class="table table-bordered">
+                <tr>
+                    <th style="width: 10px">#</th>
+                    <th>Vendor</th>
+                    <th>Product</th>
+                    <th>Launch Date</th>
+                    <th max-width="20">JV page</th>
+                    <th>Link</th>
+                    <th>Status</th>
+                    <th>Edit</th>
+                    <th>View</th>
+                </tr>
+                {% for product in products %}
+                    <tr>
+                        <td style="width: 10px">{{ loop.index }}</td>
+                        <td>{{ product.vendor }}</td>
+                        <td>{{ product.product }}</td>
+                        <td>{{ product.launchDate }}</td>
+                        <td>{{ product.jvPage }}</td>
+                        <td>{{ product.link }}</td>
+                        <th><select data-id="{{ product.id }}" class="statusChange">
+                                {% if(product.status == 'good') %}
+                                    <option selected value="good">Good</option>
+                                    <option value="bad">Bad</option>
+                                    <option value="not_sure">Not Sure</option>
+                                {% elseif(product.status == 'bad') %}
+                                    <option selected value="bad">Bad</option>
+                                    <option value="good">Good</option>
+                                    <option value="not_sure">Not Sure</option>
+                                {% elseif(product.status == 'not_sure') %}
+                                    <option selected value="not_sure">Not Sure</option>
+                                    <option value="good">Good</option>
+                                    <option value="bad">Bad</option>
+                                {% else %}
+                                    <option selected value="not_sure">Not Sure</option>
+                                    <option value="good">Good</option>
+                                    <option value="bad">Bad</option>
+                                {% endif %}
+                            </select></th>
+                        <td><a href="{{ url('product_edit',{id:product.id})}}" class="btn btn-success">Edit</a></td>
+                        <td><a href="{{ url('product_view',{id:product.id})}}" class="btn btn-info">View</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    {{ parent() }}
+    <script>
+        $('#addedDateFrom').datepicker({
+            autoclose: true
+        });
+   $('#addedDateTo').datepicker({
+            autoclose: true
+        });
+   $('#updatedDateFrom').datepicker({
+            autoclose: true
+        });
+   $('#updatedDateTo').datepicker({
+            autoclose: true
+        });
+    </script>
+    <script>
+        $('.statusChange').on('change', function() {
+            var id = ($(this).data('id'));
+            var value = (this.value);
+            console.log(value);
+            var myKeyVals = {id:id,status:value};
+            var saveData = $.ajax({
+                type: 'POST',
+                url: "{{ url('changeStatus') }}",
+                data: myKeyVals,
+                success: function(resultData) { alert(resultData) }
+            });
+            saveData.error(function() { alert("Something went wrong"); });
+        })
+    </script>
+{% endblock %}

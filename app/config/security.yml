@@ -1,0 +1,41 @@
+# To get started with security, check out the documentation:
+# http://symfony.com/doc/current/book/security.html
+security:
+
+    # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
+    providers:
+        our_db_provider:
+          entity:
+            class: AppBundle:User
+            property: username
+    encoders:
+        AppBundle\Entity\User:
+          algorithm: bcrypt
+          cost: 12
+
+
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        default:
+            pattern: ^/
+            anonymous: ~
+            http_basic: ~
+            form_login:
+                login_path: /login
+                check_path: /login
+                default_target_path: /product
+            logout:
+                path: /logout
+                target : /login
+            provider: our_db_provider
+
+    access_control:
+        # require ROLE_ADMIN for /admin*
+      - { path: ^/product, roles: ROLE_ADMIN }
+
+
+
+
