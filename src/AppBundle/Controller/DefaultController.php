@@ -43,6 +43,7 @@ class DefaultController extends Controller
             $product->setNiche($tr[8][1]);
             $product->setDatetime(new \DateTime('now'));
             $product->setUpdatedAt(new \DateTime('now'));
+            $product->setStatus('not_sure');
             $product->setLink($link->getUri());
             $em->persist($product);
 
