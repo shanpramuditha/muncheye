@@ -66,9 +66,10 @@ class DefaultController extends Controller
         $addedDateTo = $request->get('addedDateTo');
         $updatedDateFrom = $request->get('updatedDateFrom');
         $updatedDateTo = $request->get('updatedDateTo');
+        $status = $request->get('status');
         $em = $this->getDoctrine()->getManager();
         if($title != null or $title == ''){
-            $products = $em->getRepository('AppBundle:Product')->search($title,$addedDateFrom,$addedDateTo,$updatedDateFrom,$updatedDateTo);
+            $products = $em->getRepository('AppBundle:Product')->search($title,$addedDateFrom,$addedDateTo,$updatedDateFrom,$updatedDateTo,$status);
 
         }else{
             $products = $em->getRepository('AppBundle:Product')->findAll();
@@ -80,7 +81,8 @@ class DefaultController extends Controller
             'addedDateFrom'=>$addedDateFrom,
             'addedDateTo'=>$addedDateTo,
             'updatedDateFrom'=>$updatedDateFrom,
-            'updatedDateTo'=>$updatedDateTo
+            'updatedDateTo'=>$updatedDateTo,
+            'status'=>$status
         ));
     }
 

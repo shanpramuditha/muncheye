@@ -12,13 +12,18 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProductRepository extends EntityRepository
 {
-    public function search($title,$addedDateFrom,$addedDateTo,$updatedDateFrom,$updatedDateTo){
+    public function search($title,$addedDateFrom,$addedDateTo,$updatedDateFrom,$updatedDateTo,$status){
         $qb = $this->createQueryBuilder('o')
             ->select('o');
         if($title != null){
            $qb->andwhere('o.product LIKE :title')
                ->setParameter('title','%'.$title.'%')
            ;
+        }
+
+        if($status != null){
+            $qb->andWhere('o.status = :status')
+                ->setParameter('status',$status);
         }
 
         if($addedDateFrom != null or $addedDateTo != null){
