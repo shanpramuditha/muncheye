@@ -22,6 +22,8 @@ class DefaultController extends Controller
         $client = new Client();
         $crawler = $client->request('GET', $url);
         $links = $crawler->filter('div#right-column > div.item > div.item_info > a')->links();
+        $newProducts = 0;
+        $updatedProducts = 0;
         foreach ($links as $link) {
             $currentLink = ($link->getUri());
             $crawler = $client->request('GET', $currentLink);
@@ -30,8 +32,16 @@ class DefaultController extends Controller
                     return trim($td->text());
                 });
             });
-
-            $product = new Product();
+            $product = $em->getRepository('AppBundle:Product')->findOneBy(array('link'=>$link->getUri()));
+            if($product == null){
+                $product = new Product();
+                $product->setDatetime(new \DateTime('now'));
+                $product->setProduct(new \DateTime('now'));
+                $newProducts++;
+            }else{
+                $updatedProducts++;
+            }
+            $product->setProductUpdatedAt(new \DateTime('now'));
             $product->setVendor($tr[0][1]);
             $product->setProduct($tr[1][1]);
             $product->setLaunchDate($tr[2][1]);
@@ -41,8 +51,6 @@ class DefaultController extends Controller
             $product->setJvPage($tr[6][1]);
             $product->setAffiliateNetwork($tr[7][1]);
             $product->setNiche($tr[8][1]);
-            $product->setDatetime(new \DateTime('now'));
-            $product->setUpdatedAt(new \DateTime('now'));
             $product->setStatus('not_sure');
             $product->setLink($link->getUri());
             $em->persist($product);
@@ -54,6 +62,10 @@ class DefaultController extends Controller
         }
 
         $em->flush();
+
+        echo "New-products".$newProducts;
+        echo "updated products".$updatedProducts;
+        return new Response('<h1>New Products :'.$newProducts.'</h1><h1>Updated Products :'.$updatedProducts.'</h1>');
 
     }
 

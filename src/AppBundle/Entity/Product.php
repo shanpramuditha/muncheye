@@ -113,6 +113,14 @@ class Product
     private $updatedAt;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="productUpdatedAt", type="datetime", nullable=true)
+     */
+    private $productUpdatedAt;
+
+
+    /**
      * @var string
      *
      * @ORM\Column(name="comment", type="text",nullable=true)
@@ -450,5 +458,28 @@ class Product
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * Set productUpdatedAt
+     *
+     * @param \DateTime $productUpdatedAt
+     * @return Product
+     */
+    public function setProductUpdatedAt($productUpdatedAt)
+    {
+        $this->productUpdatedAt = $productUpdatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get productUpdatedAt
+     *
+     * @return \DateTime 
+     */
+    public function getProductUpdatedAt()
+    {
+        return $this->productUpdatedAt;
     }
 }
