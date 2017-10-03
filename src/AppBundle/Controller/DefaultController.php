@@ -63,8 +63,6 @@ class DefaultController extends Controller
 
         $em->flush();
 
-        echo "New-products".$newProducts;
-        echo "updated products".$updatedProducts;
         return new Response('<h1>New Products :'.$newProducts.'</h1><h1>Updated Products :'.$updatedProducts.'</h1>');
 
     }
