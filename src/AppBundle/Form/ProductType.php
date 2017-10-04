@@ -25,6 +25,7 @@ class ProductType extends AbstractType
             ->add('niche')
             ->add('status',ChoiceType::class,array(
                 'choices'=>array(
+                    'default'=>'default',
                     'good'=>'Good',
                     'bad'=>'Bad',
                     'not_sure'=>'Not sure'

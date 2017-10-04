@@ -51,7 +51,7 @@ class DefaultController extends Controller
             $product->setJvPage($tr[6][1]);
             $product->setAffiliateNetwork($tr[7][1]);
             $product->setNiche($tr[8][1]);
-            $product->setStatus('not_sure');
+            $product->setStatus('default');
             $product->setLink($link->getUri());
             $em->persist($product);
 

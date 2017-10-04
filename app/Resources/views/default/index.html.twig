@@ -29,16 +29,22 @@
                                     <option selected value="good">Good</option>
                                     <option value="bad">Bad</option>
                                     <option value="not_sure">Not Sure</option>
+                                    <option value="default">Default</option>
                                 {% elseif(status == 'bad') %}
                                     <option selected value="bad">Bad</option>
                                     <option value="good">Good</option>
                                     <option value="not_sure">Not Sure</option>
+                                    <option value="default">Default</option>
+
                                 {% elseif(status == 'not_sure') %}
                                     <option selected value="not_sure">Not Sure</option>
                                     <option value="good">Good</option>
                                     <option value="bad">Bad</option>
+                                    <option value="default">Default</option>
+
                                 {% else %}
-                                    <option selected value="not_sure">Not Sure</option>
+                                    <option value="default">Default</option>
+                                    <option value="not_sure">Not Sure</option>
                                     <option value="good">Good</option>
                                     <option value="bad">Bad</option>
                                 {% endif %}
@@ -137,23 +143,27 @@
                                         <option selected value="good">Good</option>
                                         <option value="bad">Bad</option>
                                         <option value="not_sure">Not Sure</option>
+                                        <option value="default">Default</option>
                                     {% elseif(product.status == 'bad') %}
                                         <option selected value="bad">Bad</option>
                                         <option value="good">Good</option>
                                         <option value="not_sure">Not Sure</option>
+                                        <option value="default">Default</option>
                                     {% elseif(product.status == 'not_sure') %}
                                         <option selected value="not_sure">Not Sure</option>
                                         <option value="good">Good</option>
                                         <option value="bad">Bad</option>
+                                        <option value="default">Default</option>
                                     {% else %}
-                                        <option selected value="not_sure">Not Sure</option>
+                                        <option selected value="default">Default</option>
+                                        <option value="not_sure">Not Sure</option>
                                         <option value="good">Good</option>
                                         <option value="bad">Bad</option>
                                     {% endif %}
                                 </select></th>
                             <th>{{ product.datetime | date('Y:m:d H:i:s') }}</th>
                             <th>{{ product.updatedAt | date('Y:m:d H:i:s') }}</th>
-                            <td><a href="{{ url('product_edit',{id:product.id})}}" class="btn btn-success">Edit</a></td>
+                            <td><a href="{{ url('product_edit',{id:product.id})}}" target="_blank" class="btn btn-success">Edit</a></td>
                             <td><a href="{{ url('product_view',{id:product.id})}}" class="btn btn-info">View</a></td>
                         </tr>
                     {% endfor %}
