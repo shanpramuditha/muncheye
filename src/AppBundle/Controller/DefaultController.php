@@ -36,7 +36,7 @@ class DefaultController extends Controller
             if($product == null){
                 $product = new Product();
                 $product->setDatetime(new \DateTime('now'));
-                $product->setProduct(new \DateTime('now'));
+                $product->setUpdatedAt(new \DateTime('now'));
                 $newProducts++;
             }else{
                 $updatedProducts++;
