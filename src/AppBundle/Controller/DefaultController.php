@@ -29,6 +29,7 @@ class DefaultController extends Controller
 
         foreach ($links as $link) {
             $new = false;
+            $updated = false;
             $currentLink = ($link->getUri());
             $crawler = $client->request('GET', $currentLink);
             $tr = $crawler->filter('div.product_info > table > tr')->each(function ($tr, $i) {
@@ -46,6 +47,7 @@ class DefaultController extends Controller
                 $newProducts++;
             }else{
                 if($product->getJvPage() != $tr[6][1]){
+                    $updated = true;
                     $product->setUpdatedAt(new \DateTime('now'));
                     $updatedProducts++;
                 }
@@ -67,7 +69,7 @@ class DefaultController extends Controller
 
             if($new){
                 $newProd[] = $product;
-            }else{
+            }else if ($updated){
                 $updatedProd[] = $product;
             }
 
