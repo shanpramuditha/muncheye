@@ -164,7 +164,7 @@
                             <th>{{ product.datetime | date('Y:m:d H:i:s') }}</th>
                             <th>{{ product.updatedAt | date('Y:m:d H:i:s') }}</th>
                             <td><a href="{{ url('product_edit',{id:product.id})}}" target="_blank" class="btn btn-success">Edit</a></td>
-                            <td><a href="{{ url('product_view',{id:product.id})}}" class="btn btn-info">View</a></td>
+                            <td><a href="{{ url('product_view',{id:product.id})}}" target="_blank" class="btn btn-info">View</a></td>
                         </tr>
                     {% endfor %}
 

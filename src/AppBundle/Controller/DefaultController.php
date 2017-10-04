@@ -39,7 +39,11 @@ class DefaultController extends Controller
                 $product->setUpdatedAt(new \DateTime('now'));
                 $newProducts++;
             }else{
-                $updatedProducts++;
+                if($product->getJvPage() != $tr[6][1]){
+                    $product->setUpdatedAt(new \DateTime('now'));
+                    $updatedProducts++;
+                }
+
             }
             $product->setProductUpdatedAt(new \DateTime('now'));
             $product->setVendor($tr[0][1]);
@@ -107,7 +111,7 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         if($form->isSubmitted() and $form->isValid()){
-            $product->setUpdatedAt(new \DateTime('now'));
+//            $product->setUpdatedAt(new \DateTime('now'));
             $em->flush($product);
             return $this->redirectToRoute('products_list');
         }
