@@ -21,7 +21,7 @@ class ProductRepository extends EntityRepository
            ;
         }
 
-        if($status != null){
+        if($status != null and $status!= 'default'){
             $qb->andWhere('o.status = :status')
                 ->setParameter('status',$status);
         }
