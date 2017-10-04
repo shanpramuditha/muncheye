@@ -24,7 +24,11 @@ class DefaultController extends Controller
         $links = $crawler->filter('div#right-column > div.item > div.item_info > a')->links();
         $newProducts = 0;
         $updatedProducts = 0;
+        $newProd = array();
+        $updatedProd = array();
+
         foreach ($links as $link) {
+            $new = false;
             $currentLink = ($link->getUri());
             $crawler = $client->request('GET', $currentLink);
             $tr = $crawler->filter('div.product_info > table > tr')->each(function ($tr, $i) {
@@ -33,7 +37,9 @@ class DefaultController extends Controller
                 });
             });
             $product = $em->getRepository('AppBundle:Product')->findOneBy(array('link'=>$link->getUri()));
+
             if($product == null){
+                $new = true;
                 $product = new Product();
                 $product->setDatetime(new \DateTime('now'));
                 $product->setUpdatedAt(new \DateTime('now'));
@@ -59,15 +65,37 @@ class DefaultController extends Controller
             $product->setLink($link->getUri());
             $em->persist($product);
 
+            if($new){
+                $newProd[] = $product;
+            }else{
+                $updatedProd[] = $product;
+            }
+
 //            exit;
 
 //            $all_links[] = $link->getURI();
 
         }
 
+        $data = '';
+        $data.='<h2>New Products</h2><table><thead><th>url</th><th>Added Date</th><th>Updated Date</th></thead><tbody>';
+        foreach ($newProd as $prod){
+            $data.='<tr><td><a target="_blank" href="'.$prod->getLink().'">'.$prod->getLink().'</a></td><td>'.$prod->getDatetime()->format('Y-m-d H:i:s').'</td><td>'.$prod->getUpdatedAt()->format('Y-m-d H:i:s').'</td></tr>';
+        }
+        $data.='</tbody></table>';
+
+        $data.='<h2>Updated Products</h2><table><thead><th>url</th><th>Added Date</th><th>Updated Date</th></thead><tbody>';
+        foreach ($updatedProd as $prod){
+            $data.='<tr><td><a target="_blank" href="'.$prod->getLink().'">'.$prod->getLink().'</a></td><td>'.$prod->getDatetime()->format('Y-m-d H:i:s').'</td><td>'.$prod->getUpdatedAt()->format('Y-m-d H:i:s').'</td></tr>';
+        }
+        $data.='</tbody></table>';
+
+
+
+
         $em->flush();
 
-        return new Response('<h1>New Products :'.$newProducts.'</h1><h1>Updated Products :'.$updatedProducts.'</h1>');
+        return new Response('<h1>New Products :'.$newProducts.'</h1><h1>Updated Products :'.$updatedProducts.'</h1>'.$data);
 
     }
 
