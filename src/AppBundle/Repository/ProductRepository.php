@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProductRepository extends EntityRepository
 {
-    public function search($title,$addedDateFrom,$addedDateTo,$updatedDateFrom,$updatedDateTo,$status){
+    public function search($title,$addedDateFrom,$addedDateTo,$updatedDateFrom,$updatedDateTo,$launchDateFrom,$launchDateTo,$status){
         $qb = $this->createQueryBuilder('o')
             ->select('o');
         if($title != null){
@@ -62,6 +62,31 @@ class ProductRepository extends EntityRepository
                 ->setParameter('updatedTo', $updatedDateTo);
         }
 
+        if($launchDateTo != null or $launchDateFrom != null){
+//            var_dump($launchDateFrom);
+//            var_dump($launchDateTo);
+            if($launchDateFrom != null){
+                $launchDateFrom = \DateTime::createFromFormat('m/d/Y', $launchDateFrom);
+            }
+            if($launchDateTo != null){
+                $launchDateTo = \DateTime::createFromFormat('m/d/Y', $launchDateTo);
+            }
+
+//            var_dump($launchDateFrom);
+//            var_dump($launchDateTo);
+
+            $qb->andWhere(
+                $qb->expr()->between(
+                    'o.launchDate',
+                    ':launchFrom',
+                    ':launchTo'
+                )
+            )
+                ->setParameter('launchFrom', $launchDateFrom)
+                ->setParameter('launchTo', $launchDateTo);
+        }
+
+//        var_dump($qb->getQuery()->getSQL());
         return $qb->getQuery()->getResult();
     }
 }

@@ -45,7 +45,7 @@ class Product
     /**
      * @var string
      *
-     * @ORM\Column(name="launchDate", type="string", length=255)
+     * @ORM\Column(name="launchDate", type="datetime")
      */
     private $launchDate;
 
@@ -458,5 +458,28 @@ class Product
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * Set productUpdatedAt
+     *
+     * @param \DateTime $productUpdatedAt
+     * @return Product
+     */
+    public function setProductUpdatedAt($productUpdatedAt)
+    {
+        $this->productUpdatedAt = $productUpdatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get productUpdatedAt
+     *
+     * @return \DateTime 
+     */
+    public function getProductUpdatedAt()
+    {
+        return $this->productUpdatedAt;
     }
 }

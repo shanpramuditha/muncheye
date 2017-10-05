@@ -94,7 +94,31 @@
 
                             <!-- /.input group -->
                         </div>
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <label>Launch Date : From</label>
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="text" class="form-control pull-right" value="{{ launchDateFrom }}" name="launchDateFrom" id="launchDateFrom">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Launch Date : To</label>
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="text" class="form-control pull-right" value="{{ launchDateTo }}" name="launchDateTo" id="launchDateTo">
+                            </div>
+                        </div>
+
+                        <!-- /.input group -->
                     </div>
+                    </div>
+
+                    <br>
                     <!-- /.box-body -->
 
                     <div class="box-footer">
@@ -135,7 +159,7 @@
                             <td style="width: 10px">{{ loop.index }}</td>
                             <td>{{ product.vendor }}</td>
                             <td>{{ product.product }}</td>
-                            <td>{{ product.launchDate }}</td>
+                            <td>{{ product.launchDate | date('Y-m-d') }}</td>
                             <td><a href="{{ product.jvPage }}" target="_blank">{{ product.jvPage }}</a></td>
                             <td><a href="{{ product.link }}" target="_blank">{{ product.link }}</a></td>
                             <th><select data-id="{{ product.id }}" class="statusChange">
@@ -161,8 +185,8 @@
                                         <option value="bad">Bad</option>
                                     {% endif %}
                                 </select></th>
-                            <th>{{ product.datetime | date('Y:m:d H:i:s') }}</th>
-                            <th>{{ product.updatedAt | date('Y:m:d H:i:s') }}</th>
+                            <th>{{ product.datetime | date('Y-m-d H:i:s') }}</th>
+                            <th>{{ product.updatedAt | date('Y-m-d H:i:s') }}</th>
                             <td><a href="{{ url('product_edit',{id:product.id})}}" target="_blank" class="btn btn-success">Edit</a></td>
                             <td><a href="{{ url('product_view',{id:product.id})}}" target="_blank" class="btn btn-info">View</a></td>
                         </tr>
@@ -250,6 +274,8 @@
             $('#addedDateTo').val('');
             $('#updatedDateFrom').val('');
             $('#updatedDateTo').val('');
+            $('#launchDateFrom').val('');
+            $('#launchDateTo').val('');
         });
         $('#example1').DataTable({
             "paging": true,
@@ -269,6 +295,12 @@
             autoclose: true
         });
    $('#updatedDateTo').datepicker({
+            autoclose: true
+        });
+   $('#launchDateFrom').datepicker({
+            autoclose: true
+        });
+   $('#launchDateTo').datepicker({
             autoclose: true
         });
     </script>

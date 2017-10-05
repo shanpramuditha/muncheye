@@ -45,7 +45,7 @@ class Product
     /**
      * @var string
      *
-     * @ORM\Column(name="launchDate", type="string", length=255)
+     * @ORM\Column(name="launchDate", type="datetime")
      */
     private $launchDate;
 

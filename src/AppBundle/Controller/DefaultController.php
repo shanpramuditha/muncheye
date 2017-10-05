@@ -44,6 +44,7 @@ class DefaultController extends Controller
                 $product = new Product();
                 $product->setDatetime(new \DateTime('now'));
                 $product->setUpdatedAt(new \DateTime('now'));
+                $product->setStatus('default');
                 $newProducts++;
             }else{
                 if($product->getJvPage() != $tr[6][1]){
@@ -56,14 +57,13 @@ class DefaultController extends Controller
             $product->setProductUpdatedAt(new \DateTime('now'));
             $product->setVendor($tr[0][1]);
             $product->setProduct($tr[1][1]);
-            $product->setLaunchDate($tr[2][1]);
+            $product->setLaunchDate(new \DateTime(date('Y-m-d H:i:s',strtotime($tr[2][1]))));
             $product->setLaunchTime($tr[3][1]);
             $product->setFrontEndPrice($tr[4][1]);
             $product->setCommision($tr[5][1]);
             $product->setJvPage($tr[6][1]);
             $product->setAffiliateNetwork($tr[7][1]);
             $product->setNiche($tr[8][1]);
-            $product->setStatus('default');
             $product->setLink($link->getUri());
             $em->persist($product);
 
@@ -110,10 +110,14 @@ class DefaultController extends Controller
         $addedDateTo = $request->get('addedDateTo');
         $updatedDateFrom = $request->get('updatedDateFrom');
         $updatedDateTo = $request->get('updatedDateTo');
+        $launchDateFrom = $request->get('launchDateFrom');
+        $launchDateTo = $request->get('launchDateTo');
+//        var_dump($launchDateFrom);
+//        var_dump($launchDateTo);
         $status = $request->get('status');
         $em = $this->getDoctrine()->getManager();
         if($title != null or $title == ''){
-            $products = $em->getRepository('AppBundle:Product')->search($title,$addedDateFrom,$addedDateTo,$updatedDateFrom,$updatedDateTo,$status);
+            $products = $em->getRepository('AppBundle:Product')->search($title,$addedDateFrom,$addedDateTo,$updatedDateFrom,$updatedDateTo,$launchDateFrom,$launchDateTo,$status);
 
         }else{
             $products = $em->getRepository('AppBundle:Product')->findAll();
@@ -126,6 +130,8 @@ class DefaultController extends Controller
             'addedDateTo'=>$addedDateTo,
             'updatedDateFrom'=>$updatedDateFrom,
             'updatedDateTo'=>$updatedDateTo,
+            'launchDateFrom'=>$launchDateFrom,
+            'launchDateTo'=>$launchDateTo,
             'status'=>$status
         ));
     }
